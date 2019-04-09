@@ -18,16 +18,16 @@ class App extends Component {
     };
   }
 
-  setSearchTopStories(result) {
-    this.setState({ result });
-  }
-
   componentDidMount() {
     fetch(url)
       .then(response => response.json())
       .then(result => this.setSearchTopStories(result))
       .catch(error => console.log(error, "error on fetch"));
     console.log(url);
+  }
+
+  setSearchTopStories(result) {
+    this.setState({ result });
   }
 
   onDismiss = id => {
