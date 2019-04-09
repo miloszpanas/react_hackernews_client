@@ -1,26 +1,9 @@
 import React, { Component } from "react";
 import Search from "./components/Search";
 import Table from "./components/Table";
+// api constants imported from API component;
+import { DEFAULT_QUERY, url } from "./API";
 import "./App.css";
-
-const list = [
-  {
-    title: "React",
-    url: "https://reactjs.org/",
-    author: "Jordan Walke",
-    num_comments: 3,
-    points: 4,
-    objectID: 0
-  },
-  {
-    title: "Redux",
-    url: "https://redux.js.org/",
-    author: "Dan Abramov, Andrew Clark",
-    num_comments: 2,
-    points: 5,
-    objectID: 1
-  }
-];
 
 const isSearched = searchTerm => item =>
 item.title.toLowerCase().includes(searchTerm.toLowerCase());
@@ -31,11 +14,25 @@ class App extends Component {
     super(props);
 
     this.state = {
-      list,
+      // list,
       name: "miłosz",
       isGoodProgrammer: true,
-      searchTerm: ""
+      result: null,
+      searchTerm: DEFAULT_QUERY
     };
+  }
+
+  componentDidMount() {
+    fetch(url)
+      .then(response => response.json)
+      .then(result => this.setSearchTopStories(result))
+      .catch(error => error);
+
+      console.log(url);
+  }
+
+  setSearchTopStories = (result) => {
+    this.setState({ result });
   }
 
   toggleGoodProgrammer = () => {
@@ -55,8 +52,10 @@ class App extends Component {
   }
 
   render() {
-    const { list, isGoodProgrammer, searchTerm } = this.state;
-    console.log(searchTerm)
+    const { result, isGoodProgrammer, searchTerm } = this.state;
+    console.log(this.state);
+
+    if (!result) { return null }
     return (
       <div className="page">
         <div className="interactions">
@@ -67,7 +66,7 @@ class App extends Component {
             Search
           </Search>
           <Table 
-            list={list}
+            list={result.hits}
             onDismiss={this.onDismiss}
             pattern={searchTerm}
             toggleIsGood={this.toggleGoodProgrammer}
