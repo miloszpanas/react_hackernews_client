@@ -42,9 +42,12 @@ class App extends Component {
   };
   
   onDismiss = (id) => {
-    const updatedState = this.state.list.filter(item => (item.objectID !== id));
-    this.setState({ list: updatedState});
-    console.log(this);
+    const { result } = this.state;
+    const isNotId = item => item.objectID !== id; 
+    const updatedHits = result.hits.filter(isNotId);
+    this.setState({
+      result: { ...result, hits: updatedHits} 
+    });
   }
 
   onInputChange = (e) => {
@@ -53,7 +56,7 @@ class App extends Component {
 
   render() {
     const { result, isGoodProgrammer, searchTerm } = this.state;
-    console.log(this.state);
+    console.log("pokaz stan", this.state);
 
     if (!result) { return null }
     return (
