@@ -6,77 +6,66 @@ import { DEFAULT_QUERY, url } from "./API";
 import "./App.css";
 
 const isSearched = searchTerm => item =>
-item.title.toLowerCase().includes(searchTerm.toLowerCase());
-
+  item.title.toLowerCase().includes(searchTerm.toLowerCase());
 
 class App extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      // list,
-      name: "miłosz",
-      isGoodProgrammer: true,
       result: null,
       searchTerm: DEFAULT_QUERY
     };
   }
 
-  componentDidMount() {
-    fetch(url)
-      .then(response => response.json)
-      .then(result => this.setSearchTopStories(result))
-      .catch(error => error);
-
-      console.log(url);
-  }
-
-  setSearchTopStories = (result) => {
+  setSearchTopStories(result) {
     this.setState({ result });
   }
 
-  toggleGoodProgrammer = () => {
-    this.setState(prevState => ({
-      isGoodProgrammer: !prevState.isGoodProgrammer
-    }));
-  };
-  
-  onDismiss = (id) => {
+  componentDidMount() {
+    fetch(url)
+      .then(response => response.json())
+      .then(result => this.setSearchTopStories(result))
+      .catch(error => console.log(error, "error on fetch"));
+    console.log(url);
+  }
+
+  onDismiss = id => {
     const { result } = this.state;
-    const isNotId = item => item.objectID !== id; 
+    const isNotId = item => item.objectID !== id;
     const updatedHits = result.hits.filter(isNotId);
     this.setState({
-      result: { ...result, hits: updatedHits} 
+      result: { ...result, hits: updatedHits }
     });
-  }
+  };
 
-  onInputChange = (e) => {
+  onInputChange = e => {
     this.setState({ searchTerm: e.target.value });
-  }
+  };
 
   render() {
-    const { result, isGoodProgrammer, searchTerm } = this.state;
+    const { result, searchTerm } = this.state;
     console.log("pokaz stan", this.state);
+    console.log("result?", result);
+    if (!result) {
+      return null;
+    }
 
-    if (!result) { return null }
     return (
       <div className="page">
         <div className="interactions">
-          <Search 
-            value={searchTerm}
-            onChange={this.onInputChange}
-          >
+          <Search value={searchTerm} onChange={this.onInputChange}>
             Search
           </Search>
-          <Table 
+        </div>
+        {result && (
+          <Table
             list={result.hits}
             onDismiss={this.onDismiss}
             pattern={searchTerm}
-            toggleIsGood={this.toggleGoodProgrammer}
-            isGood={isGoodProgrammer}
             isSearched={isSearched}
           />
-        </div>
+        )}
       </div>
     );
   }
