@@ -47,9 +47,6 @@ class App extends Component {
     const { result, searchTerm } = this.state;
     console.log("pokaz stan", this.state);
     console.log("result?", result);
-    if (!result) {
-      return null;
-    }
 
     return (
       <div className="page">
