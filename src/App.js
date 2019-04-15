@@ -2,11 +2,8 @@ import React, { Component } from "react";
 import Search from "./components/Search";
 import Table from "./components/Table";
 // api constants imported from API component;
-import { DEFAULT_QUERY, url } from "./API";
+import { DEFAULT_QUERY, PATH_BASE, PATH_SEARCH, PARAM_SEARCH, url } from "./API";
 import "./App.css";
-
-const isSearched = searchTerm => item =>
-  item.title.toLowerCase().includes(searchTerm.toLowerCase());
 
 class App extends Component {
   constructor(props) {
@@ -18,12 +15,22 @@ class App extends Component {
     };
   }
 
-  componentDidMount() {
-    fetch(url)
+  fetchSearchTopStories = (searchTerm) => {
+    fetch(`${PATH_BASE}${PATH_SEARCH}${PARAM_SEARCH}${searchTerm}`)
       .then(response => response.json())
       .then(result => this.setSearchTopStories(result))
-      .catch(error => console.log(error, "error on fetch"));
-    console.log(url);
+      .catch(error => error);
+  }
+
+  componentDidMount() {
+    const { searchTerm } = this.state;
+    this.fetchSearchTopStories(searchTerm);
+  }
+
+  onSearchSubmit = (event) => {
+    const { searchTerm } = this.state;
+    this.fetchSearchTopStories(searchTerm);
+    event.preventDefault();
   }
 
   setSearchTopStories(result) {
@@ -51,7 +58,11 @@ class App extends Component {
     return (
       <div className="page">
         <div className="interactions">
-          <Search value={searchTerm} onChange={this.onInputChange}>
+          <Search 
+            value={searchTerm}
+            onChange={this.onInputChange}
+            onSubmit={this.onSearchSubmit}
+          >
             Search
           </Search>
         </div>
@@ -59,8 +70,6 @@ class App extends Component {
           <Table
             list={result.hits}
             onDismiss={this.onDismiss}
-            pattern={searchTerm}
-            isSearched={isSearched}
           />
         )}
       </div>

@@ -14,15 +14,12 @@ const smallColumn = {
 };
 
 const Table = ({
-  isSearched,
   list,
   onDismiss,
-  pattern,
 }) => {
-  console.log("a tu?", list);
   return (
     <div className="table">
-      {list.filter(isSearched(pattern)).map(item => (
+      {list.map(item => (
         <div key={item.objectID} className="table-row">
           <span style={largeColumn}>
             <a href={item.url}>{item.title}</a>
