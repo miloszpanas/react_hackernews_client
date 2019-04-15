@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 import Search from "./components/Search";
 import Table from "./components/Table";
+import Button from "./components/Button";
 // api constants imported from API component;
-import { DEFAULT_QUERY, PATH_BASE, PATH_SEARCH, PARAM_SEARCH, url } from "./API";
+import { DEFAULT_QUERY, PATH_BASE, PATH_SEARCH, PARAM_SEARCH, PARAM_PAGE } from "./API";
 import "./App.css";
 
 class App extends Component {
@@ -15,8 +16,8 @@ class App extends Component {
     };
   }
 
-  fetchSearchTopStories = (searchTerm) => {
-    fetch(`${PATH_BASE}${PATH_SEARCH}${PARAM_SEARCH}${searchTerm}`)
+  fetchSearchTopStories = (searchTerm, page = 0) => {
+    fetch(`${PATH_BASE}${PATH_SEARCH}${PARAM_SEARCH}${searchTerm}&${PARAM_PAGE}${page}`)
       .then(response => response.json())
       .then(result => this.setSearchTopStories(result))
       .catch(error => error);
@@ -34,7 +35,15 @@ class App extends Component {
   }
 
   setSearchTopStories(result) {
-    this.setState({ result });
+    const { hits, page } = result;
+
+    const oldHits = page !== 0 ? this.state.result.hits : [];
+
+    const updatedHits = [
+      ...oldHits,
+      ...hits
+    ]
+    this.setState({ result: { hits: updatedHits, page } });
   }
 
   onDismiss = id => {
@@ -52,8 +61,8 @@ class App extends Component {
 
   render() {
     const { result, searchTerm } = this.state;
+    const page = (result && result.page) || 0;
     console.log("pokaz stan", this.state);
-    console.log("result?", result);
 
     return (
       <div className="page">
@@ -72,6 +81,13 @@ class App extends Component {
             onDismiss={this.onDismiss}
           />
         )}
+        <div className="interactions">
+          <Button
+            onClick={() => this.fetchSearchTopStories(searchTerm, page +1)}
+          >
+            More
+          </Button>
+        </div>
       </div>
     );
   }
