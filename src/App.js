@@ -1,4 +1,8 @@
 import React, { Component } from "react";
+
+import { Search } from "./components/Search";
+import Table from "./components/Table";
+
 import "./App.css";
 
 const list = [
@@ -20,9 +24,13 @@ const list = [
   }
 ];
 
+const isSearched = searchTerm => item =>
+  item.title.toLowerCase().includes(searchTerm.toLowerCase());
+
 class App extends Component {
   state = {
-    list
+    list,
+    searchTerm: ""
   };
 
   onDismiss = id => {
@@ -33,27 +41,26 @@ class App extends Component {
     });
   };
 
+  onSearchChange = e => {
+    this.setState({ searchTerm: e.target.value });
+  };
+
   render() {
+    const { list, searchTerm } = this.state;
+
     return (
-      <div className="App">
-        {this.state.list.map(item => (
-          <div key={item.objectID}>
-            <span>
-              <a href={item.url}>{item.title}</a>
-            </span>
-            <span>{item.author}</span>
-            <span>{item.num_comments}</span>
-            <span>{item.points}</span>
-            <span>
-              <button
-                type="button"
-                onClick={() => this.onDismiss(item.objectID)}
-              >
-                Dimiss
-              </button>
-            </span>
-          </div>
-        ))}
+      <div className="page">
+        <div className="interactions">
+          <Search value={searchTerm} onChange={this.onSearchChange}>
+            Search
+          </Search>
+          <Table
+            list={list}
+            searchTerm={searchTerm}
+            isSearched={isSearched}
+            onDismiss={this.onDismiss}
+          />
+        </div>
       </div>
     );
   }
