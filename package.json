@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@emotion/core": "^10.0.10",
     "eslint-config-airbnb": "^17.1.0",
     "eslint-plugin-compat": "^3.1.1",
     "eslint-plugin-import": "^2.16.0",
@@ -11,7 +12,8 @@
     "eslint-plugin-react": "^7.12.4",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
-    "react-scripts": "2.1.8"
+    "react-scripts": "2.1.8",
+    "react-spinners": "^0.5.4"
   },
   "scripts": {
     "start": "react-scripts start",

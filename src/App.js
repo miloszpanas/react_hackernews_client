@@ -1,9 +1,11 @@
 import React, { Component } from "react";
+import { PacmanLoader } from "react-spinners";
+
 import { Search } from "./components/Search";
 import Table from "./components/Table";
 import "./App.css";
 
-const DEFAULT_QUERY = "react";
+const DEFAULT_QUERY = "redux";
 const PATH_BASE = "https://hn.algolia.com/api/v1";
 const PATH_SEARCH = "/search?";
 const PARAM_SEARCH = "query=";
@@ -36,7 +38,8 @@ class App extends Component {
   state = {
     // list,
     result: null,
-    searchTerm: DEFAULT_QUERY
+    searchTerm: DEFAULT_QUERY,
+    loading: true
   };
 
   componentDidMount() {
@@ -66,9 +69,19 @@ class App extends Component {
 
   render() {
     const { result, searchTerm } = this.state;
+    console.log(this.state);
 
     if (!result) {
-      return null;
+      return (
+        <div className="loader-wrapper">
+          <PacmanLoader
+            sizeUnit="px"
+            size={150}
+            color="#e3e3e3"
+            loading={this.state.loading}
+          />
+        </div>
+      );
     }
 
     return (
