@@ -1,5 +1,4 @@
 import React from "react";
-import Button from "./Button";
 
 export const Search = ({ value, onChange, children, onSubmit}) => (
   <form onSubmit={onSubmit}>

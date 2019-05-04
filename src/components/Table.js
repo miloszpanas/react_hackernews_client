@@ -2,7 +2,9 @@ import React from "react";
 import Button from "./Button";
 
 const largeColumn = {
-  flex: 4
+  flex: 4,
+  overflow: "hidden",
+  marginRight: "1rem"
 };
 
 const mediumColumn = {
