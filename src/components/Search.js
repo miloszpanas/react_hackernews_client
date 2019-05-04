@@ -4,7 +4,7 @@ import Button from "./Button";
 export const Search = ({ value, onChange, children }) => (
   <form action="">
     <input
-      type="text"
+      type="search"
       value={value}
       onChange={onChange}
     />
