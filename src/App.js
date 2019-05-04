@@ -11,9 +11,6 @@ const PATH_SEARCH = "/search?";
 const PARAM_SEARCH = "query=";
 const url = `${PATH_BASE}${PATH_SEARCH}${PARAM_SEARCH}${DEFAULT_QUERY}`;
 
-const isSearched = searchTerm => item =>
-  item.title.toLowerCase().includes(searchTerm.toLowerCase());
-
 class App extends Component {
   state = {
     // list,
@@ -24,12 +21,21 @@ class App extends Component {
 
   componentDidMount() {
     const { searchTerm } = this.state;
-    console.log(url);
+    this.fetchSearchTopStories(searchTerm);
+  }
+
+  fetchSearchTopStories = searchTerm => {
     fetch(`${PATH_BASE}${PATH_SEARCH}${PARAM_SEARCH}${searchTerm}`)
       .then(response => response.json())
       .then(result => this.setSearchTopStories(result))
       .catch(error => error);
-  }
+  };
+
+  onSearchSubmit = (event) => {
+    const { searchTerm } = this.state;
+    this.fetchSearchTopStories(searchTerm);
+    event.preventDefault();
+  };
 
   setSearchTopStories = result => {
     this.setState({ result });
@@ -55,15 +61,17 @@ class App extends Component {
     return (
       <div className="page">
         <div className="interactions">
-          <Search value={searchTerm} onChange={this.onSearchChange}>
+          <Search
+            value={searchTerm}
+            onChange={this.onSearchChange}
+            onSubmit={this.onSearchSubmit}
+          >
             Search
           </Search>
         </div>
         {result ? (
           <Table
             list={result.hits}
-            searchTerm={searchTerm}
-            isSearched={isSearched}
             onDismiss={this.onDismiss}
           />
         ) : (

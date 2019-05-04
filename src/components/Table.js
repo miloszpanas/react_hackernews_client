@@ -12,9 +12,9 @@ const mediumColumn = {
 const smallColumn = {
   flex: 1
 };
-const Table = ({ list, searchTerm, isSearched, onDismiss }) => (
+const Table = ({ list, onDismiss }) => (
   <div className="table">
-    {list.filter(isSearched(searchTerm)).map(item => (
+    {list.map(item => (
       <div key={item.objectID} className="table-row">
         <span style={largeColumn}>
           <a href={item.url}>{item.title}</a>
