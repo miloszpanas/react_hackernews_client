@@ -11,7 +11,6 @@ const PATH_SEARCH = "/search?";
 const PARAM_SEARCH = "query=";
 const url = `${PATH_BASE}${PATH_SEARCH}${PARAM_SEARCH}${DEFAULT_QUERY}`;
 
-
 const isSearched = searchTerm => item =>
   item.title.toLowerCase().includes(searchTerm.toLowerCase());
 
@@ -40,7 +39,7 @@ class App extends Component {
     const { result } = this.state;
     const updatedHits = result.hits.filter(item => item.objectID !== id);
     this.setState({
-      result: {hits: updatedHits}
+      result: { ...result, hits: updatedHits }
     });
   };
 
@@ -53,33 +52,30 @@ class App extends Component {
     // console.log(this.state);
     console.log(result);
 
-
-    if (!result) {
-      return (
-        <div className="loader-wrapper">
-          <PacmanLoader
-            sizeUnit="px"
-            size={150}
-            color="#e3e3e3"
-            loading={this.state.loading}
-          />
-        </div>
-      );
-    }
-
     return (
       <div className="page">
         <div className="interactions">
           <Search value={searchTerm} onChange={this.onSearchChange}>
             Search
           </Search>
+        </div>
+        {result ? (
           <Table
             list={result.hits}
             searchTerm={searchTerm}
             isSearched={isSearched}
             onDismiss={this.onDismiss}
           />
-        </div>
+        ) : (
+          <div className="loader-wrapper">
+            <PacmanLoader
+              sizeUnit="px"
+              size={150}
+              color="#e3e3e3"
+              loading={this.state.loading}
+            />
+          </div>
+        )}
       </div>
     );
   }

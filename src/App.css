@@ -4,6 +4,8 @@ html, body, #root {
 
 .page {
   margin: 20px;
+  position: relative;
+  height: 100%;
 }
 
 .interactionstext-align {
@@ -60,8 +62,8 @@ html, body, #root {
 }
 
 .loader-wrapper {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
+  position: absolute;
+  top: 40%;
+  left: 44%;
+  transform: translate(-44%, -40%);
 }
