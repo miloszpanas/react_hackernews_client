@@ -29,32 +29,16 @@ class App extends Component {
     this.fetchSearchTopStories(searchTerm);
   }
 
-  fetchSearchTopStories = (searchTerm, page = 0) => {
-    const url = `${PATH_BASE}${PATH_SEARCH}${PARAM_SEARCH}${searchTerm}&${PARAM_PAGE}${page}&${PARAM_HPP}${DEFAULT_HPP}`;
-    fetch(url)
-      .then(response => response.json())
-      .then(result => this.setSearchTopStories(result))
-      .catch(error => error);
-    console.log(url);
-  };
-
-  onSearchSubmit = event => {
-    const { searchTerm } = this.state;
-    this.state({ searchKey: searchTerm });
-    this.fetchSearchTopStories(searchTerm);
-    event.preventDefault();
-  };
+  needsToSearchTopStories = (searchTerm) => !this.state.results[searchTerm];
 
   setSearchTopStories = result => {
     const { hits, page } = result;
     const { searchKey, results } = this.state;
 
-    const oldHits = results && results[searchKey] ? results[searchKey].hits : [];
+    const oldHits =
+      results && results[searchKey] ? results[searchKey].hits : [];
 
-    const updatedHits = [
-      ...oldHits,
-      ...hits
-    ];
+    const updatedHits = [...oldHits, ...hits];
 
     this.setState({
       results: {
@@ -64,6 +48,30 @@ class App extends Component {
     });
   };
 
+  fetchSearchTopStories = (searchTerm, page = 0) => {
+    const url = `${PATH_BASE}${PATH_SEARCH}${PARAM_SEARCH}${searchTerm}&${PARAM_PAGE}${page}&${PARAM_HPP}${DEFAULT_HPP}`;
+    fetch(url)
+      .then(response => response.json())
+      .then(result => this.setSearchTopStories(result))
+      .catch(error => error);
+    console.log(url);
+  };
+
+  onSearchChange = e => {
+    this.setState({ searchTerm: e.target.value });
+  };
+
+  onSearchSubmit = event => {
+    const { searchTerm } = this.state;
+    this.setState({ searchKey: searchTerm });
+
+    if (this.needsToSearchTopStories(searchTerm)) {
+      this.fetchSearchTopStories(searchTerm);
+    }
+
+    event.preventDefault();
+  }
+
   onDismiss = id => {
     const { results, searchKey } = this.state;
     const { hits, page } = results[searchKey];
@@ -71,10 +79,6 @@ class App extends Component {
     this.setState({
       results: { ...results, [searchKey]: { hits: updatedHits, page } }
     });
-  };
-
-  onSearchChange = e => {
-    this.setState({ searchTerm: e.target.value });
   };
 
   render() {
