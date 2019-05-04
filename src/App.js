@@ -3,13 +3,17 @@ import { PacmanLoader } from "react-spinners";
 
 import { Search } from "./components/Search";
 import Table from "./components/Table";
+import Button from "./components/Button";
 import "./App.css";
 
 const DEFAULT_QUERY = "redux";
+const DEFAULT_HPP = "10";
+
 const PATH_BASE = "https://hn.algolia.com/api/v1";
 const PATH_SEARCH = "/search?";
 const PARAM_SEARCH = "query=";
-const url = `${PATH_BASE}${PATH_SEARCH}${PARAM_SEARCH}${DEFAULT_QUERY}`;
+const PARAM_PAGE = "page=";
+const PARAM_HPP = "hitsPerPage=";
 
 class App extends Component {
   state = {
@@ -24,21 +28,34 @@ class App extends Component {
     this.fetchSearchTopStories(searchTerm);
   }
 
-  fetchSearchTopStories = searchTerm => {
-    fetch(`${PATH_BASE}${PATH_SEARCH}${PARAM_SEARCH}${searchTerm}`)
+  fetchSearchTopStories = (searchTerm, page = 0) => {
+    const url = `${PATH_BASE}${PATH_SEARCH}${PARAM_SEARCH}${searchTerm}&${PARAM_PAGE}${page}&${PARAM_HPP}${DEFAULT_HPP}`;
+    fetch(url)
       .then(response => response.json())
       .then(result => this.setSearchTopStories(result))
       .catch(error => error);
+    console.log(url);
   };
 
-  onSearchSubmit = (event) => {
+  onSearchSubmit = event => {
     const { searchTerm } = this.state;
     this.fetchSearchTopStories(searchTerm);
     event.preventDefault();
   };
 
   setSearchTopStories = result => {
-    this.setState({ result });
+    const { hits, page } = result;
+
+    const oldHits = page !== 0 ? this.state.result.hits : [];
+
+    const updatedHits = [
+      ...oldHits,
+      ...hits
+    ];
+
+    this.setState({
+      result: { hits: updatedHits, page }
+    });
   };
 
   onDismiss = id => {
@@ -55,6 +72,7 @@ class App extends Component {
 
   render() {
     const { result, searchTerm } = this.state;
+    const page = (result && result.page) || 0;
     // console.log(this.state);
     console.log(result);
 
@@ -70,10 +88,7 @@ class App extends Component {
           </Search>
         </div>
         {result ? (
-          <Table
-            list={result.hits}
-            onDismiss={this.onDismiss}
-          />
+          <Table list={result.hits} onDismiss={this.onDismiss}/>
         ) : (
           <div className="loader-wrapper">
             <PacmanLoader
@@ -84,6 +99,13 @@ class App extends Component {
             />
           </div>
         )}
+        <div className="interactions">
+          <Button
+            onClick={() => this.fetchSearchTopStories(searchTerm, page + 1)}
+          >
+            More
+          </Button>
+        </div>
       </div>
     );
   }
