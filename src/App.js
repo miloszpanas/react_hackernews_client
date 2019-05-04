@@ -37,10 +37,10 @@ class App extends Component {
   };
 
   onDismiss = id => {
-    const { list } = this.state;
-    const updatedList = list.filter(item => item.objectID !== id);
+    const { result } = this.state;
+    const updatedHits = result.hits.filter(item => item.objectID !== id);
     this.setState({
-      list: updatedList
+      result: {hits: updatedHits}
     });
   };
 
@@ -50,7 +50,9 @@ class App extends Component {
 
   render() {
     const { result, searchTerm } = this.state;
-    console.log(this.state);
+    // console.log(this.state);
+    console.log(result);
+
 
     if (!result) {
       return (
