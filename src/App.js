@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { PacmanLoader } from "react-spinners";
+import axios from "axios";
 
 import { Search } from "./components/Search";
 import Table from "./components/Table";
@@ -49,9 +50,8 @@ class App extends Component {
 
   fetchSearchTopStories = (searchTerm, page = 0) => {
     const url = `${PATH_BASE}${PATH_SEARCH}${PARAM_SEARCH}${searchTerm}&${PARAM_PAGE}${page}&${PARAM_HPP}${DEFAULT_HPP}`;
-    fetch(url)
-      .then(response => response.json())
-      .then(result => this.setSearchTopStories(result))
+    axios(url)
+      .then(result => this.setSearchTopStories(result.data))
       .catch(error => this.setState({ error }));
     console.log(url);
   };
@@ -109,7 +109,7 @@ class App extends Component {
           </Search>
         </div>
         {results ? (
-          <Table list={list} onDismiss={this.onDismiss} />
+          <Table list={list} onDismiss={this.onDismiss}/>
         ) : (
           <div className="loader-wrapper">
             <PacmanLoader
