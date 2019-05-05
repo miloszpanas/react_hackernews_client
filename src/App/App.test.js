@@ -54,7 +54,7 @@ describe("Button", () => {
     expect(tree).toMatchSnapshot();
   });
 
-  it("test click event", () => {
+  it("clicks and fires off event properly", () => {
     const mockCallBack = jest.fn();
 
     const button = shallow((
