@@ -29,8 +29,6 @@ class App extends Component {
     this.fetchSearchTopStories(searchTerm);
   }
 
-  needsToSearchTopStories = (searchTerm) => !this.state.results[searchTerm];
-
   setSearchTopStories = result => {
     const { hits, page } = result;
     const { searchKey, results } = this.state;
@@ -60,6 +58,8 @@ class App extends Component {
   onSearchChange = e => {
     this.setState({ searchTerm: e.target.value });
   };
+
+  needsToSearchTopStories = (searchTerm) => !this.state.results[searchTerm];
 
   onSearchSubmit = event => {
     const { searchTerm } = this.state;

@@ -67,3 +67,7 @@ html, body, #root {
   left: 44%;
   transform: translate(-44%, -40%);
 }
+
+#Search::-webkit-search-cancel-button{
+  cursor: pointer;
+}
