@@ -65,7 +65,8 @@ exports[`App has a valid snapshot 1`] = `
 
 exports[`Button has a valid snapshot 1`] = `
 <button
-  className=""
+  className="string"
+  onClick={[Function]}
   type="button"
 >
   Click
@@ -73,10 +74,14 @@ exports[`Button has a valid snapshot 1`] = `
 `;
 
 exports[`Search has a valid snapshot 1`] = `
-<form>
+<form
+  onSubmit={[Function]}
+>
   <input
     id="Search"
+    onChange={[Function]}
     type="search"
+    value="a"
   />
   <button
     type="submit"
@@ -87,133 +92,6 @@ exports[`Search has a valid snapshot 1`] = `
 `;
 
 exports[`Table has a valid snapshot 1`] = `
-<div
-  className="table"
->
-  <div
-    className="table-row"
-  >
-    <span
-      style={
-        Object {
-          "flex": 4,
-          "marginRight": "1rem",
-          "overflow": "hidden",
-          "textOverflow": "ellipsis",
-        }
-      }
-    >
-      <a>
-        1
-      </a>
-    </span>
-    <span
-      style={
-        Object {
-          "flex": 3,
-        }
-      }
-    >
-      1
-    </span>
-    <span
-      style={
-        Object {
-          "flex": 1,
-        }
-      }
-    >
-      1
-    </span>
-    <span
-      style={
-        Object {
-          "flex": 1,
-        }
-      }
-    >
-      2
-    </span>
-    <span
-      style={
-        Object {
-          "flex": 1,
-        }
-      }
-    >
-      <button
-        className="button-inline"
-        onClick={[Function]}
-        type="button"
-      >
-        Remove
-      </button>
-    </span>
-  </div>
-  <div
-    className="table-row"
-  >
-    <span
-      style={
-        Object {
-          "flex": 4,
-          "marginRight": "1rem",
-          "overflow": "hidden",
-          "textOverflow": "ellipsis",
-        }
-      }
-    >
-      <a>
-        2
-      </a>
-    </span>
-    <span
-      style={
-        Object {
-          "flex": 3,
-        }
-      }
-    >
-      2
-    </span>
-    <span
-      style={
-        Object {
-          "flex": 1,
-        }
-      }
-    >
-      1
-    </span>
-    <span
-      style={
-        Object {
-          "flex": 1,
-        }
-      }
-    >
-      2
-    </span>
-    <span
-      style={
-        Object {
-          "flex": 1,
-        }
-      }
-    >
-      <button
-        className="button-inline"
-        onClick={[Function]}
-        type="button"
-      >
-        Remove
-      </button>
-    </span>
-  </div>
-</div>
-`;
-
-exports[`Table has a valid snapshot 2`] = `
 <div
   className="table"
 >

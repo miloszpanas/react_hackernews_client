@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import Button from "./Button";
 
 const largeColumn = {
@@ -37,5 +38,10 @@ const Table = ({ list, onDismiss }) => (
     ))}
   </div>
 );
+
+Table.propTypes = {
+  list: PropTypes.array.isRequired,
+  onDismiss: PropTypes.func.isRequired
+};
 
 export default Table;

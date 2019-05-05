@@ -24,15 +24,22 @@ describe("App", () => {
 });
 
 describe("Search", () => {
+  const props = {
+    value: "a",
+    onChange: () => {},
+    children: "a",
+    onSubmit: () => {}
+  };
+
   it("renders without crashing", () => {
     const div = document.createElement("div");
-    ReactDOM.render(<Search/>, div);
+    ReactDOM.render(<Search { ...props }/>, div);
     ReactDOM.unmountComponentAtNode(div);
   });
 
   test("has a valid snapshot", () => {
     const component = renderer.create(
-      <Search>Search</Search>
+      <Search { ...props }>Search</Search>
     );
     const tree = component.toJSON();
     expect(tree).toMatchSnapshot();
@@ -40,15 +47,21 @@ describe("Search", () => {
 });
 
 describe("Button", () => {
+  const props = {
+    onClick: () => {},
+    className: "string",
+    children: "string"
+  };
+
   it("renders without crashing", () => {
     const div = document.createElement("div");
-    ReactDOM.render(<Button/>, div);
+    ReactDOM.render(<Button { ...props }/>, div);
     ReactDOM.unmountComponentAtNode(div);
   });
 
   test("has a valid snapshot", () => {
     const component = renderer.create(
-      <Button>Click</Button>
+      <Button { ...props }>Click</Button>
     );
     const tree = component.toJSON();
     expect(tree).toMatchSnapshot();
@@ -58,7 +71,7 @@ describe("Button", () => {
     const mockCallBack = jest.fn();
 
     const button = shallow((
-      <Button onClick={mockCallBack}>Click</Button>
+      <Button { ...props } onClick={mockCallBack}>Click</Button>
     ));
     button.find("button").simulate("click");
     expect(mockCallBack.mock.calls.length).toEqual(1);
@@ -71,6 +84,7 @@ describe("Button", () => {
         { title: "1", author: "1", num_comments: 1, points: 2, objectID: "a"},
         { title: "2", author: "2", num_comments: 1, points: 2, objectID: "b"},
       ],
+      onDismiss: () => {}
     };
 
     it("shows two items in list", () => {
