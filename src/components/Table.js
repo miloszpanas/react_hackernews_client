@@ -4,6 +4,7 @@ import Button from "./Button";
 const largeColumn = {
   flex: 4,
   overflow: "hidden",
+  textOverflow: "ellipsis",
   marginRight: "1rem"
 };
 

@@ -20,7 +20,8 @@ class App extends Component {
     results: null,
     searchKey: "",
     searchTerm: DEFAULT_QUERY,
-    loading: true
+    loading: true,
+    error: null
   };
 
   componentDidMount() {
@@ -51,7 +52,7 @@ class App extends Component {
     fetch(url)
       .then(response => response.json())
       .then(result => this.setSearchTopStories(result))
-      .catch(error => error);
+      .catch(error => this.setState({ error }));
     console.log(url);
   };
 
@@ -82,7 +83,7 @@ class App extends Component {
   };
 
   render() {
-    const { results, searchTerm, searchKey } = this.state;
+    const { results, searchTerm, searchKey, error } = this.state;
 
     const page =
       (results && results[searchKey] && results[searchKey].page) || 0;
@@ -91,6 +92,10 @@ class App extends Component {
       (results && results[searchKey] && results[searchKey].hits) || [];
 
     console.log(results);
+
+    if (error) {
+      return <p>An error has occurred</p>;
+    }
 
     return (
       <div className="page">
