@@ -1,0 +1,341 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`App has a valid snapshot 1`] = `
+<div
+  className="page"
+>
+  <div
+    className="interactions"
+  >
+    <form
+      onSubmit={[Function]}
+    >
+      <input
+        id="Search"
+        onChange={[Function]}
+        type="search"
+        value="redux"
+      />
+      <button
+        type="submit"
+      >
+        Search
+      </button>
+    </form>
+  </div>
+  <div
+    className="loader-wrapper"
+  >
+    <div
+      className="css-kvf4zz-wrapper-wrapper"
+    >
+      <div
+        className="css-jm6d0y-pacmanStyle"
+      />
+      <div
+        className="css-1uleo9b-pacmanStyle"
+      />
+      <div
+        className="css-h2r4c2-ballStyle"
+      />
+      <div
+        className="css-wxqwk4-ballStyle"
+      />
+      <div
+        className="css-pxolhw-ballStyle"
+      />
+      <div
+        className="css-d4argl-ballStyle"
+      />
+    </div>
+  </div>
+  <div
+    className="interactions"
+  >
+    <button
+      className=""
+      onClick={[Function]}
+      type="button"
+    >
+      More
+    </button>
+  </div>
+</div>
+`;
+
+exports[`Button has a valid snapshot 1`] = `
+<button
+  className=""
+  type="button"
+>
+  Click
+</button>
+`;
+
+exports[`Search has a valid snapshot 1`] = `
+<form>
+  <input
+    id="Search"
+    type="search"
+  />
+  <button
+    type="submit"
+  >
+    Search
+  </button>
+</form>
+`;
+
+exports[`Table has a valid snapshot 1`] = `
+<div
+  className="table"
+>
+  <div
+    className="table-row"
+  >
+    <span
+      style={
+        Object {
+          "flex": 4,
+          "marginRight": "1rem",
+          "overflow": "hidden",
+          "textOverflow": "ellipsis",
+        }
+      }
+    >
+      <a>
+        1
+      </a>
+    </span>
+    <span
+      style={
+        Object {
+          "flex": 3,
+        }
+      }
+    >
+      1
+    </span>
+    <span
+      style={
+        Object {
+          "flex": 1,
+        }
+      }
+    >
+      1
+    </span>
+    <span
+      style={
+        Object {
+          "flex": 1,
+        }
+      }
+    >
+      2
+    </span>
+    <span
+      style={
+        Object {
+          "flex": 1,
+        }
+      }
+    >
+      <button
+        className="button-inline"
+        onClick={[Function]}
+        type="button"
+      >
+        Remove
+      </button>
+    </span>
+  </div>
+  <div
+    className="table-row"
+  >
+    <span
+      style={
+        Object {
+          "flex": 4,
+          "marginRight": "1rem",
+          "overflow": "hidden",
+          "textOverflow": "ellipsis",
+        }
+      }
+    >
+      <a>
+        2
+      </a>
+    </span>
+    <span
+      style={
+        Object {
+          "flex": 3,
+        }
+      }
+    >
+      2
+    </span>
+    <span
+      style={
+        Object {
+          "flex": 1,
+        }
+      }
+    >
+      1
+    </span>
+    <span
+      style={
+        Object {
+          "flex": 1,
+        }
+      }
+    >
+      2
+    </span>
+    <span
+      style={
+        Object {
+          "flex": 1,
+        }
+      }
+    >
+      <button
+        className="button-inline"
+        onClick={[Function]}
+        type="button"
+      >
+        Remove
+      </button>
+    </span>
+  </div>
+</div>
+`;
+
+exports[`Table has a valid snapshot 2`] = `
+<div
+  className="table"
+>
+  <div
+    className="table-row"
+  >
+    <span
+      style={
+        Object {
+          "flex": 4,
+          "marginRight": "1rem",
+          "overflow": "hidden",
+          "textOverflow": "ellipsis",
+        }
+      }
+    >
+      <a>
+        1
+      </a>
+    </span>
+    <span
+      style={
+        Object {
+          "flex": 3,
+        }
+      }
+    >
+      1
+    </span>
+    <span
+      style={
+        Object {
+          "flex": 1,
+        }
+      }
+    >
+      1
+    </span>
+    <span
+      style={
+        Object {
+          "flex": 1,
+        }
+      }
+    >
+      2
+    </span>
+    <span
+      style={
+        Object {
+          "flex": 1,
+        }
+      }
+    >
+      <button
+        className="button-inline"
+        onClick={[Function]}
+        type="button"
+      >
+        Remove
+      </button>
+    </span>
+  </div>
+  <div
+    className="table-row"
+  >
+    <span
+      style={
+        Object {
+          "flex": 4,
+          "marginRight": "1rem",
+          "overflow": "hidden",
+          "textOverflow": "ellipsis",
+        }
+      }
+    >
+      <a>
+        2
+      </a>
+    </span>
+    <span
+      style={
+        Object {
+          "flex": 3,
+        }
+      }
+    >
+      2
+    </span>
+    <span
+      style={
+        Object {
+          "flex": 1,
+        }
+      }
+    >
+      1
+    </span>
+    <span
+      style={
+        Object {
+          "flex": 1,
+        }
+      }
+    >
+      2
+    </span>
+    <span
+      style={
+        Object {
+          "flex": 1,
+        }
+      }
+    >
+      <button
+        className="button-inline"
+        onClick={[Function]}
+        type="button"
+      >
+        Remove
+      </button>
+    </span>
+  </div>
+</div>
+`;
