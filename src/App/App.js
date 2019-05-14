@@ -5,6 +5,7 @@ import axios from "axios";
 import { Search } from "../components/Search";
 import Table from "../components/Table";
 import Button from "../components/Button";
+import { Loading } from "../components/Loading";
 import "./App.css";
 
 const DEFAULT_QUERY = "redux";
@@ -22,7 +23,8 @@ class App extends Component {
     searchKey: "",
     searchTerm: DEFAULT_QUERY,
     loading: true,
-    error: null
+    error: null,
+    isLoadingOnSearch: false
   };
 
   componentDidMount() {
@@ -44,11 +46,14 @@ class App extends Component {
       results: {
         ...results,
         [searchKey]: { hits: updatedHits, page }
-      }
+      },
+      isLoadingOnSearch: false
     });
   };
 
   fetchSearchTopStories = (searchTerm, page = 0) => {
+    this.setState({ isLoadingOnSearch: true });
+
     const url = `${PATH_BASE}${PATH_SEARCH}${PARAM_SEARCH}${searchTerm}&${PARAM_PAGE}${page}&${PARAM_HPP}${DEFAULT_HPP}`;
     axios(url)
       .then(result => this.setSearchTopStories(result.data))
@@ -83,7 +88,7 @@ class App extends Component {
   };
 
   render() {
-    const { results, searchTerm, searchKey, error } = this.state;
+    const { results, searchTerm, searchKey, error, isLoadingOnSearch } = this.state;
 
     const page =
       (results && results[searchKey] && results[searchKey].page) || 0;
@@ -121,11 +126,15 @@ class App extends Component {
           </div>
         )}
         <div className="interactions">
-          <Button
-            onClick={() => this.fetchSearchTopStories(searchKey, page + 1)}
-          >
-            More
-          </Button>
+          { isLoadingOnSearch ? (
+            <Loading/>
+          ) : (
+            <Button
+              onClick={() => this.fetchSearchTopStories(searchKey, page + 1)}
+            >
+                More
+            </Button>
+          )}
         </div>
       </div>
     );

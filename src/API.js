@@ -5,4 +5,4 @@ export const PATH_SEARCH = "/search?";
 export const PARAM_SEARCH = "query=";
 export const PARAM_PAGE = "page=";
 
-export const url = `${PATH_BASE}${PATH_SEARCH}${PARAM_SEARCH}${DEFAULT_QUERY}`; 
+export const url = `${PATH_BASE}${PATH_SEARCH}${PARAM_SEARCH}${DEFAULT_QUERY}`;
