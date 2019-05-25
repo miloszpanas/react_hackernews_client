@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import { PacmanLoader } from "react-spinners";
 import axios from "axios";
 
@@ -17,7 +17,16 @@ const PARAM_SEARCH = "query=";
 const PARAM_PAGE = "page=";
 const PARAM_HPP = "hitsPerPage=";
 
-class App extends Component {
+// higher order component to conditionally show either "more button" or loading state
+const withLoading = (Component) => ({ isLoadingOnSearch, ...rest }) => (
+  isLoadingOnSearch
+    ? <Loading/>
+    : <Component { ...rest }/>
+);
+
+const ButtonWithLoading = withLoading(Button);
+
+class App extends React.Component {
   state = {
     results: null,
     searchKey: "",
@@ -65,7 +74,7 @@ class App extends Component {
     this.setState({ searchTerm: e.target.value });
   };
 
-  needsToSearchTopStories = (searchTerm) => !this.state.results[searchTerm];
+  needsToSearchTopStories = searchTerm => !this.state.results[searchTerm];
 
   onSearchSubmit = event => {
     const { searchTerm } = this.state;
@@ -76,7 +85,7 @@ class App extends Component {
     }
 
     event.preventDefault();
-  }
+  };
 
   onDismiss = id => {
     const { results, searchKey } = this.state;
@@ -88,7 +97,13 @@ class App extends Component {
   };
 
   render() {
-    const { results, searchTerm, searchKey, error, isLoadingOnSearch } = this.state;
+    const {
+      results,
+      searchTerm,
+      searchKey,
+      error,
+      isLoadingOnSearch
+    } = this.state;
 
     const page =
       (results && results[searchKey] && results[searchKey].page) || 0;
@@ -114,7 +129,7 @@ class App extends Component {
           </Search>
         </div>
         {results ? (
-          <Table list={list} onDismiss={this.onDismiss}/>
+          <Table list={list} onDismiss={this.onDismiss} />
         ) : (
           <div className="loader-wrapper">
             <PacmanLoader
@@ -126,15 +141,12 @@ class App extends Component {
           </div>
         )}
         <div className="interactions">
-          { isLoadingOnSearch ? (
-            <Loading/>
-          ) : (
-            <Button
-              onClick={() => this.fetchSearchTopStories(searchKey, page + 1)}
-            >
-                More
-            </Button>
-          )}
+          <ButtonWithLoading
+            isLoadingOnSearch={isLoadingOnSearch}
+            onClick={() => this.fetchSearchTopStories(searchKey, page + 1)}
+          >
+            More
+          </ButtonWithLoading>
         </div>
       </div>
     );
