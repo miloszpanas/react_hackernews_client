@@ -129,7 +129,7 @@ class App extends React.Component {
           </Search>
         </div>
         {results ? (
-          <Table list={list} onDismiss={this.onDismiss} />
+          <Table list={list} onDismiss={this.onDismiss}/>
         ) : (
           <div className="loader-wrapper">
             <PacmanLoader
