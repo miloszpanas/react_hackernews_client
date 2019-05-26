@@ -9,7 +9,10 @@ const Sort = ({ sortKey, onSort, children, activeSortKey }) => {
   );
 
   return (
-    <Button onClick={() => onSort(sortKey)} className={sortClass}>
+    <Button
+      onClick={() => onSort(sortKey)}
+      className={sortClass}
+    >
       {children}
     </Button>
   );
