@@ -1,6 +1,7 @@
 import React from "react";
 import { PacmanLoader } from "react-spinners";
 import axios from "axios";
+import { sortBy } from "lodash";
 
 import { Search } from "../components/Search";
 import Table from "../components/Table";
@@ -16,6 +17,14 @@ const PATH_SEARCH = "/search?";
 const PARAM_SEARCH = "query=";
 const PARAM_PAGE = "page=";
 const PARAM_HPP = "hitsPerPage=";
+
+const SORTS = {
+  NONE: list => list,
+  TITLE: list => sortBy(list, "title"),
+  AUTHOR: list => sortBy(list, "author"),
+  COMMENTS: list => sortBy(list, "num_comments").reverse(),
+  POINTS: list => sortBy(list, "points").reverse(),
+};
 
 // higher order component to conditionally show either "more button" or loading state
 const withLoading = (Component) => ({ isLoadingOnSearch, ...rest }) => (
@@ -33,13 +42,20 @@ class App extends React.Component {
     searchTerm: DEFAULT_QUERY,
     loading: true,
     error: null,
-    isLoadingOnSearch: false
+    isLoadingOnSearch: false,
+    sortKey: "NONE",
+    isSortingReverse: false
   };
 
   componentDidMount() {
     const { searchTerm } = this.state;
     this.setState({ searchKey: searchTerm });
     this.fetchSearchTopStories(searchTerm);
+  }
+
+  onSort = (sortKey) => {
+    const isSortingReverse = this.state.sortKey === sortKey && !this.state.isSortingReverse;
+    this.setState({ sortKey, isSortingReverse });
   }
 
   setSearchTopStories = result => {
@@ -102,7 +118,9 @@ class App extends React.Component {
       searchTerm,
       searchKey,
       error,
-      isLoadingOnSearch
+      isLoadingOnSearch,
+      sortKey,
+      isSortingReverse
     } = this.state;
 
     const page =
@@ -129,7 +147,14 @@ class App extends React.Component {
           </Search>
         </div>
         {results ? (
-          <Table list={list} onDismiss={this.onDismiss}/>
+          <Table
+            sortContent={SORTS}
+            list={list}
+            onDismiss={this.onDismiss}
+            sortKey={sortKey}
+            onSort={this.onSort}
+            isSortingReverse={isSortingReverse}
+          />
         ) : (
           <div className="loader-wrapper">
             <PacmanLoader
